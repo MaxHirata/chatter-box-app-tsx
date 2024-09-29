@@ -1,11 +1,11 @@
 import { useContext, useState } from "react"
-import { ChatContext } from "../context/ChatContext";
+import { ChatContext, ChatContextType } from "../context/ChatContext";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 
 const CreateUserDialog = ({ open, onClose } : {open: boolean, onClose: () => void}) => {
-    const { handleCreateUser } = useContext(ChatContext);
+    const { handleCreateUser } = useContext<ChatContextType>(ChatContext);
     
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState<string>('');
 
     return (
         <Dialog open={open} onClose={onClose}>
