@@ -8,16 +8,23 @@ import {
     TextField 
 } from "@mui/material";
 import { useContext, useState } from "react";
-import { ChatContext } from "../context/chatContext";
+import { ChatContext, ChatContextType } from "../context/ChatContext";
 
-const CreateChatDialog = ({open, onClose}) => {
+const CreateChatDialog = ({open, onClose} : {open: boolean, onClose: () => void}) => {
 
     const { 
         currentUser,
         handleCreateChat 
-    } = useContext(ChatContext);
+    } = useContext<ChatContextType>(ChatContext);
 
-    const [chatTitle, setChatTitle] = useState('');
+    const [chatTitle, setChatTitle] = useState<string>('');
+
+    const handleCreate = () => {
+        if(currentUser) {
+            handleCreateChat([currentUser], chatTitle);
+        }
+        onClose();
+    }
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -36,12 +43,7 @@ const CreateChatDialog = ({open, onClose}) => {
                 >
                     Cancel
                 </Button>
-                <Button 
-                    onClick={() => {
-                        handleCreateChat([currentUser], chatTitle);
-                        onClose();
-                    }}
-                >
+                <Button onClick={() => handleCreate()}>
                     Save
                 </Button>
             </DialogActions>
