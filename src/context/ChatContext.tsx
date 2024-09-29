@@ -180,7 +180,7 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
     }
 
     const handleSendMessage = (userId: string, chatId: string, message: string) => {
-        const newMessage = {
+        const newMessage: ChatLog = {
             senderName: userHash[userId].name,
             message: message,
             timeStamp: new Date(Date.now()).toLocaleString()
