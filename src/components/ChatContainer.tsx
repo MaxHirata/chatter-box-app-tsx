@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
-import { ChatContext } from '../context/chatContext';
+import { useContext } from 'react'
+import { ChatContext, ChatContextType } from '../context/ChatContext';
 import EmptyUserState from './EmptyUserState';
 import ChatView from './ChatView';
 import { Box } from '@mui/material';
 
 function ChatContainer() {
 
-    const { userHash } = useContext(ChatContext);
+    const { userHash } = useContext<ChatContextType>(ChatContext);
     
     const numUsers = Object.keys(userHash).length;
 

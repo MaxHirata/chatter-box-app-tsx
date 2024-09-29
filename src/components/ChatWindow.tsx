@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { ChatContext } from "../context/chatContext";
+import { Chat, ChatContext } from "../context/ChatContext";
 
 const ChatWindow = () => {
 
@@ -11,15 +11,24 @@ const ChatWindow = () => {
         handleSendMessage
     } = useContext(ChatContext);
 
-    const [currentChatLogs, setCurrentChatLogs] = useState(chatHash[currentChat] ?? []);
+    const defaultChat: Chat = {
+        id: '',
+        name: '',
+        participantIds: [],
+        chatLogs: []
+    }
+
+    const [currentChatLogs, setCurrentChatLogs] = useState<Chat>(currentChat ? chatHash[currentChat] : defaultChat);
     const [messageText, setMessageText] = useState('');
 
     useEffect(() => {
-        setCurrentChatLogs(chatHash[currentChat])
+        if (currentChat) {
+            setCurrentChatLogs(chatHash[currentChat])
+        }
     }, [currentChat, chatHash])
 
     const sendMessage = () => {
-        if(messageText) {
+        if(currentUser && currentChat && messageText) {
             handleSendMessage(currentUser, currentChat, messageText);
             setMessageText('');
         }

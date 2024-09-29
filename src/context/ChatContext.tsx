@@ -2,31 +2,31 @@ import React from 'react';
 import { createContext, useState } from "react"
 import { v4 as uuid } from "uuid";
 
-interface User {
+export interface User {
     id: string,
     name: string,
     involvedChats: string[],
     deleted: boolean 
 }
 
-interface UserHash {
+export interface UserHash {
     [key: string]: User
 }
 
-interface ChatLog {
+export interface ChatLog {
     senderName: string,
     message: string,
     timeStamp: string
 }
 
-interface Chat {
+export interface Chat {
     id: string,
     name: string,
     participantIds: string[],
     chatLogs: ChatLog[]
 }
 
-interface ChatHash {
+export interface ChatHash {
     [key: string] : Chat
 }
 

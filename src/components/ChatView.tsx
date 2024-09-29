@@ -2,12 +2,12 @@ import { Box } from "@mui/material"
 import ChatWindow from "./ChatWindow";
 import LeftNav from "./LeftNav";
 import { useContext } from "react";
-import { ChatContext } from "../context/chatContext";
+import { ChatContext, ChatContextType } from "../context/ChatContext";
 import EmptyChatState from "./EmptyChatState";
 
 const ChatView = () => {
 
-    const { currentChat } = useContext(ChatContext);
+    const { currentChat } = useContext<ChatContextType>(ChatContext);
 
     return (
         <Box

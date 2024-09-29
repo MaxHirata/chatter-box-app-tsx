@@ -1,12 +1,11 @@
 import { Box, Button } from "@mui/material";
-import { useContext, useState } from "react";
-import { ChatContext } from "../context/chatContext";
+import { useState } from "react";
 import { Chat, PersonAdd } from "@mui/icons-material";
 import CreateUserDialog from "./CreateUserDialog";
 
 const EmptyUserState = () => {
     
-    const [ openCreateUserDialog, setOpenCreateUserDialog ] = useState(false);
+    const [ openCreateUserDialog, setOpenCreateUserDialog ] = useState<boolean>(false);
 
     return (
         <Box
