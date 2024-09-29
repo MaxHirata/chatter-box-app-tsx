@@ -1,6 +1,6 @@
 import { Box, Button, IconButton } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { ChatContext } from "../context/chatContext";
+import { ChatContext, ChatContextType, User } from "../context/ChatContext";
 import CreateChatDialog from "./CreateChatDialog";
 import { Add, Delete } from "@mui/icons-material";
 import DeleteChatDialog from "./DeleteChatDialog";
@@ -13,15 +13,24 @@ const LeftNav = () => {
         userHash,
         chatHash,
         handleSelectCurrentChat,
-    } = useContext(ChatContext);
+    } = useContext<ChatContextType>(ChatContext);
 
-    const [openCreateChatDialog, setOpenCreateChatDialog] = useState(false);
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-    const [chatToDelete, setChatToDelete] = useState(null);
-    const [currUser, setCurrUser] = useState(userHash[currentUser]);
+    const defaultUserValue: User = {
+        id: '',
+        name: '',
+        involvedChats: [],
+        deleted: false 
+    }
+
+    const [openCreateChatDialog, setOpenCreateChatDialog] = useState<boolean>(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+    const [chatToDelete, setChatToDelete] = useState<string | null>(null);
+    const [currUser, setCurrUser] = useState<User>(currentUser ? userHash[currentUser] : defaultUserValue);
 
     useEffect(() => {
-        setCurrUser(userHash[currentUser]);
+        if(currentUser) {
+            setCurrUser(userHash[currentUser]);
+        };
     }, [currentUser, chatHash, userHash])
 
     const userIds = Object.keys(userHash);
@@ -126,14 +135,17 @@ const LeftNav = () => {
                 open={openCreateChatDialog} 
                 onClose={() => setOpenCreateChatDialog(false)} 
             />
-            <DeleteChatDialog 
-                chatId={chatToDelete} 
-                open={openDeleteDialog} 
-                onClose={() => {
-                    setOpenDeleteDialog(false);
-                    setChatToDelete(null);
-                }} 
-            />
+            { chatToDelete && (
+                <DeleteChatDialog 
+                    chatId={chatToDelete} 
+                    open={openDeleteDialog} 
+                    onClose={() => {
+                        setOpenDeleteDialog(false);
+                        setChatToDelete(null);
+                    }} 
+                />
+            )};
+            
         </Box>
     );
 }

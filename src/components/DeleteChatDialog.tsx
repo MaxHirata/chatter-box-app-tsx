@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { ChatContext } from "../context/chatContext";
+import { ChatContext, ChatContextType } from "../context/ChatContext";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
-const DeleteChatDialog = ({open, onClose, chatId}) => {
-    const { handleDeleteChat } = useContext(ChatContext);
+const DeleteChatDialog = ({open, onClose, chatId}: {open: boolean, onClose: () => void, chatId: string}) => {
+    const { handleDeleteChat } = useContext<ChatContextType>(ChatContext);
 
     return (
         <Dialog open={open} onClose={onClose}>
