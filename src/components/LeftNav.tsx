@@ -91,41 +91,42 @@ const LeftNav = () => {
             >
                 <Box>
                     <Box sx={{ fontWeight: 600, marginTop: 2, marginBottom: 2 }}>Chat List</Box>
-                    {currUser.involvedChats.map((chatId, idx) => {
-                    const chat = chatHash[chatId];
-                    return(
-                        <Box 
-                            key={idx}
-                            sx={{ display: 'flex',justifyContent: 'flex-start', alignItems: 'center' }}
-                        >
+                    <Box sx={{ overflowY: 'auto' }}>
+                        {currUser.involvedChats.map((chatId, idx) => {
+                        const chat = chatHash[chatId];
+                        return(
                             <Box 
-                                sx={{
-                                    minWidth: '150px',
-                                    border: `2px solid ${chatId === currentChat ? '#4287f5' : '#515761'}`,
-                                    borderRadius: '6px',
-                                    padding: '4px 8px',
-                                    margin: '5px 10px'
-                                }}
-                                onClick={() => handleSelectCurrentChat(chatId)}
+                                key={idx}
+                                sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}
                             >
-                              {chat.name}
-                            </Box>
-                            <IconButton
-                                    size="small"
-                                    onClick={() => {
-                                        setChatToDelete(chatId);
-                                        setOpenDeleteDialog(true);
+                                <Box 
+                                    sx={{
+                                        minWidth: '150px',
+                                        border: `2px solid ${chatId === currentChat ? '#4287f5' : '#515761'}`,
+                                        borderRadius: '6px',
+                                        padding: '4px 8px',
+                                        margin: '5px 10px'
                                     }}
+                                    onClick={() => handleSelectCurrentChat(chatId)}
                                 >
-                                <Delete fontSize="inherit"/>
-                            </IconButton>
-                        </Box>
-                        );
-                    })}
+                                {chat.name}
+                                </Box>
+                                <IconButton
+                                        size="small"
+                                        onClick={() => {
+                                            setChatToDelete(chatId);
+                                            setOpenDeleteDialog(true);
+                                        }}
+                                    >
+                                    <Delete fontSize="inherit"/>
+                                </IconButton>
+                            </Box>
+                            );
+                        })}
+                    </Box>
                 </Box>
-
                 <Button
-                    sx={{ width: 180 }}
+                    sx={{ width: 180, marginTop: '8px' }}
                     variant="contained"
                     onClick={() => setOpenCreateChatDialog(!openCreateChatDialog)}
                     startIcon={<Add/>}
@@ -146,8 +147,7 @@ const LeftNav = () => {
                         setChatToDelete(null);
                     }} 
                 />
-            )};
-            
+            )}
         </Box>
     );
 }

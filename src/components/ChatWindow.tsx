@@ -46,7 +46,7 @@ const ChatWindow = () => {
             sx={{ 
                 width: '80%', 
                 height: 'inherit',
-                marginLeft: '8px'
+                marginLeft: '8px',
             }}
         > 
             <Box 
@@ -61,31 +61,34 @@ const ChatWindow = () => {
                 <Box 
                     sx={{ 
                         fontSize: 18, 
-                        fontWeight: 600, 
+                        fontWeight: 630, 
                         textDecoration: 'underline',
                         marginBottom: '8px',
                     }} 
                 >
                     {currentChatLogs.name}
                 </Box>
-                {currentChatLogs.chatLogs?.map( (chatLog, index) => {
-                    const sender = chatLog.senderName;
-                    const message = chatLog.message;
-                    const timeStamp = chatLog.timeStamp;
-                    return (
-                        <Box
-                            key={index}
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between'
-                            }}
-                        >
-                            <Box>{sender}:</Box>
-                            <Box>"{message}"</Box>
-                            <Box>{timeStamp}</Box>
-                        </Box>
-                    )
-                } )}
+                <Box sx={{ maxHeight: '650px', overflow: 'auto' }}>
+                    {currentChatLogs.chatLogs?.map( (chatLog, index) => {
+                        const sender = chatLog.senderName;
+                        const message = chatLog.message;
+                        const timeStamp = chatLog.timeStamp;
+                        return (
+                            <Box
+                                key={index}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    padding: '2px 4px'
+                                }}
+                            >
+                                <Box>{sender}:</Box>
+                                <Box sx={{ textAlign: 'start' }}>"{message}"</Box>
+                                <Box>{timeStamp}</Box>
+                            </Box>
+                        )
+                    })}
+                </Box>
             </Box>
             <Box
                 sx={{
