@@ -69,16 +69,30 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
     const [userHash, setUserHash] = useState<UserHash>({});
     const [chatHash, setChatHash] = useState<ChatHash>({});
 
+    /**
+     * Sets a selected user as the current user
+     * @param userId 
+     */
     const handleSelectCurrentUser = (userId: string) => { setCurrentUser(userId) }
 
+    /**
+     * Sets a selected chat as the current chat
+     * @param chatId
+     */
     const handleSelectCurrentChat = (chatId: string) => { setCurrentChat(chatId) }
 
+    /**
+     * Creates a new user and creates a private chat for that user
+     * and sets the new user and thier private chat as the current \
+     * selected user and current selected chat
+     * @param name 
+     */
     const handleCreateUser = (name: string) => {
         const chatId = uuid();
         const userId = uuid();
 
         // Create a self private chat so the new user can chat to them selves
-        const selfChat = {
+        const selfChat: Chat = {
             id: chatId,
             name: 'Self Private Chat',
             participantIds: [userId],
@@ -86,7 +100,7 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
         }
 
         // Create New User
-        const newUser = {
+        const newUser: User = {
             id: userId,
             name: name,
             involvedChats: [chatId],
@@ -97,7 +111,7 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
         updatedChatHash[chatId] = selfChat;
         setChatHash(updatedChatHash);
 
-        let updatedUserHash = {...userHash};
+        let updatedUserHash: UserHash = {...userHash};
         updatedUserHash[userId] = newUser;
         setUserHash(updatedUserHash);
 
@@ -106,6 +120,13 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
         setCurrentChat(chatId);
     }
 
+    /**
+     * This is method sets an existing user as current user and sets the current 
+     *      chat to that new selected user's first available chat if it exists.
+     * NOTE: This method is not currently used. This is for future support for having 
+     *       multiple users and creating private chats between multiple users
+     * @param userId 
+     */
     const handleSwitchUser = (userId: string) => {
         if(userId) {
             const user: User = userHash[userId];
@@ -125,12 +146,30 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
         }
     }
 
+    /**
+     *  This method soft deletes a user. This is to help not display that deleted user 
+     *      on the user list but will still preserve records of chat logs that deleted 
+     *      person was a part of.
+     *  NOTE: This method is not currently used. This is for future support for having 
+     *       multiple users and creating private chats between multiple users
+     * @param userId 
+     */
     const handleDeleteUser = (userId: string) => {
         let updatedUserHash: UserHash = {...userHash};
         updatedUserHash[userId].deleted = true;
         setUserHash(updatedUserHash);
     }
 
+    /**
+     * Creates a new chat.
+     * Note: The reason why this method takes an array of userIds 
+     *       is to support multiple users being involved in the chat.
+     *       Currently this app only supports a single user but in the
+     *       future when multple user support is available, this 
+     *       method should multi user chats
+     * @param userIds
+     * @param chatName 
+     */
     const handleCreateChat = (userIds: string[], chatName: string) => {
         const chatId = uuid();
         const newChat: Chat = {
@@ -139,10 +178,10 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
             participantIds: [...userIds],
             chatLogs: []
         }
-        let updatedChatHash = {...chatHash};
+        let updatedChatHash: ChatHash = {...chatHash};
         updatedChatHash[chatId] = newChat;
 
-        let updatedUserHash = {...userHash};
+        let updatedUserHash: UserHash = {...userHash};
         userIds.forEach(userId => {
             updatedUserHash[userId].involvedChats.push(chatId);
         })
@@ -152,6 +191,11 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
         setCurrentChat(chatId); // After chat is create it becomes the new current chat
     }
 
+    /**
+     * Deletes a user's chat, deletes all records of the chat in the chatHash 
+     * and removes that chat from current user's involvedChat list
+     * @param chatId 
+     */
     const handleDeleteChat = (chatId: string) => {
         let updatedChatHash: ChatHash = {...chatHash};
         let updatedUserHash: UserHash = {...userHash};
@@ -179,6 +223,12 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
         setChatHash(updatedChatHash);
     }
 
+    /**
+     * Creats a chatLog message to be sent to the chat
+     * @param userId 
+     * @param chatId 
+     * @param message 
+     */
     const handleSendMessage = (userId: string, chatId: string, message: string) => {
         const newMessage: ChatLog = {
             senderName: userHash[userId].name,
@@ -186,7 +236,7 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
             timeStamp: new Date(Date.now()).toLocaleString()
         }
 
-        let updatedChatHash = {...chatHash};
+        let updatedChatHash: ChatHash = {...chatHash};
         updatedChatHash[chatId].chatLogs.push(newMessage);
         setChatHash(updatedChatHash);
     }

@@ -21,7 +21,6 @@ const DeleteChatDialog = ({open, onClose, chatId}: {open: boolean, onClose: () =
                 </Button>
                 <Button 
                     onClick={() => {
-                        console.log("Delete Chat: ", chatId);
                         handleDeleteChat(chatId);
                         onClose();
                     }}
