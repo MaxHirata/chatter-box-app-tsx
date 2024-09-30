@@ -61,14 +61,14 @@ const ChatWindow = () => {
                 <Box 
                     sx={{ 
                         fontSize: 18, 
-                        fontWeight: 630, 
+                        fontWeight: 600, 
                         textDecoration: 'underline',
                         marginBottom: '8px',
                     }} 
                 >
                     {currentChatLogs.name}
                 </Box>
-                <Box sx={{ maxHeight: '650px', overflow: 'auto' }}>
+                <Box sx={{ maxHeight: '70vh', overflow: 'auto' }}>
                     {currentChatLogs.chatLogs?.map( (chatLog, index) => {
                         const sender = chatLog.senderName;
                         const message = chatLog.message;
