@@ -14,6 +14,8 @@ This is chat simulation app that :
   - User can create multiple chats
   - User can delete a chat, deleting all messages associated with that deleted chat.
 
+  The state management tool used is React's useContext hook.
+
   This App uses Material UI as a React Comonent library as well as UUID for creating generated unique Ids.
 
 ## App Workflow
