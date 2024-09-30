@@ -41,5 +41,5 @@ Currently this app only supports a single user, however the data structure and m
   - switching existing users
   - creating group chats with multiple users in a single chat
 
-This repository was copied from another repository [chatter-box-app](https://github.com/MaxHirata/chatter-box-app)
+This repository was copied from another repository [chatter-box-app](https://github.com/MaxHirata/chatter-box-app).
 This is was due to that first chatter-box-app being written in JSX while this version is in TypeScript Tsx. If you are interested in the full commit history, please view this repo's commit history as well as the original jsx chatter-box-app commit history.
