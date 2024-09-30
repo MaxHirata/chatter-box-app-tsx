@@ -1,50 +1,43 @@
-# React + TypeScript + Vite
+# Chatter Box App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
+After cloning this repository, run the fallowing to run the application:
 
 ```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+  npm install
+  npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Description
+This is chat simulation app that :
+  - Creates a new user
+  - User can send chat messages to a chat
+  - User can create multiple chats
+  - User can delete a chat, deleting all messages associated with that deleted chat.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+  This App uses Material UI as a React Comonent library as well as UUID for creating generated unique Ids.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## App Workflow
+1) Upon running the app, you will have to create a user first that just requires a user name. This would automatically create a private chat so you can already start chatting to yourself.
+
+2) While in the chat window view:
+    - On the left hand nav:
+        - You can see yourself as the current "logged in user"
+        - See the list of available chats that are you associated with.
+        - At the very bottom of the nav bar, there is a "Create Chat" button
+    - On the right hand chat window:
+        - You can see a window with the current selected chat
+        - See messages in the chat if there are any with the sender name, message contents, and time stamp.
+        - At the very bottom, there is an input for to create a new chat message and a button to send that message to chat.
+
+  3) When hitting the "Create Chat" button, you just need to provide a name for the new chat. These chats will hold there own records of chat messages for that chat. So when selecting that chat, you only see messages associated that chat.
+
+  4) You can also delete a chat through the "trash can" button next to the chat name. After going through the chat deletion warning/confirmation dialog, this would delete all traces of that chat, including all users associated with the chat and all chat messages associated with that deleted chat.
+
+## Note: 
+Currently this app only supports a single user, however the data structure and methods within the ChatContext.tsx file should support:
+  - multi user creation
+  - switching existing users
+  - creating group chats with multiple users in a single chat
+
+This repository was cloned from another repository [chatter-box-app](https://github.com/MaxHirata/chatter-box-app)
+This is was due to that first chatter-box-app being written in JSX while this version is in TypeScript Tsx. If you are interested in the full commit history, please view this repo's commit history as well as the original jsx chatter-box-app commit history.
