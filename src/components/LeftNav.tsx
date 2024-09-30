@@ -58,7 +58,7 @@ const LeftNav = () => {
                     marginBottom: '8px'
                 }}
             >
-                <Box sx={{ fontWeight: 600, marginTop: 2, marginBottom: 2 }}>User List</Box>
+                <Box sx={{ fontWeight: 600, marginTop: 2, marginBottom: 2 }}>Current User</Box>
                 { userIds.map((userId) => {
                     const user = userHash[userId];
                     return (
@@ -67,6 +67,8 @@ const LeftNav = () => {
                             sx={{
                                 width: '180px',
                                 border: `3px solid ${userId === currentUser ? '#4287f5' : '#515761'}`,
+                                fontSize: 18,
+                                fontWeight: `${userId === currentUser ? 600 : 200}`,
                                 borderRadius: '12px',
                                 padding: 1,
                                 margin: '8px 4px'

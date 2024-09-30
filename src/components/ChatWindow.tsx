@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Chat, ChatContext } from "../context/ChatContext";
 
 const ChatWindow = () => {
@@ -31,7 +31,14 @@ const ChatWindow = () => {
         if(currentUser && currentChat && messageText) {
             handleSendMessage(currentUser, currentChat, messageText);
             setMessageText('');
+        } else {
+            // Throw some kind of error
+            console.error("Error: A User and a selected Chat must be set in order to send a message to chat");
         }
+    }
+
+    const handleOnChangeMessage = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setMessageText(e.target.value)
     }
 
     return (
@@ -103,15 +110,23 @@ const ChatWindow = () => {
                     }}
                     size="small"
                     value={messageText}
-                    onChange={ e => setMessageText(e.target.value)}
+                    onChange={ handleOnChangeMessage }
                 />
                 <Button
                     sx={{
-                        marginLeft: '8px'
+                        marginLeft: '8px',
+                        '&.Mui-disabled' : {
+                            opacity: 0.5,
+                            color: 'white',
+                            backgroundColor: '#4287f5'
+                        }
                     }}
+                    disabled={!messageText}
                     variant="contained"
                     onClick={() => sendMessage()}
-                >Send</Button>
+                >
+                    Send
+                </Button>
             </Box>
         </Box>
     );

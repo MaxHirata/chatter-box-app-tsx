@@ -80,7 +80,7 @@ const ChatContextProvider = ({ children } : { children: React.ReactNode }) => {
         // Create a self private chat so the new user can chat to them selves
         const selfChat = {
             id: chatId,
-            name: 'self private chat',
+            name: 'Self Private Chat',
             participantIds: [userId],
             chatLogs: []
         }

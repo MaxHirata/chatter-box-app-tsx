@@ -7,7 +7,7 @@ import {
     DialogTitle, 
     TextField 
 } from "@mui/material";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ChatContext, ChatContextType } from "../context/ChatContext";
 
 const CreateChatDialog = ({open, onClose} : {open: boolean, onClose: () => void}) => {
@@ -19,11 +19,19 @@ const CreateChatDialog = ({open, onClose} : {open: boolean, onClose: () => void}
 
     const [chatTitle, setChatTitle] = useState<string>('');
 
-    const handleCreate = () => {
+    const handleCreateNewChat = () => {
         if(currentUser) {
             handleCreateChat([currentUser], chatTitle);
+        } else {
+            // Throw some kind of error
+            console.error("Error: A User must be set to create a new chat");
         }
+        setChatTitle('');
         onClose();
+    }
+
+    const handleOnChangeChatTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setChatTitle(e.target.value)
     }
 
     return (
@@ -33,17 +41,13 @@ const CreateChatDialog = ({open, onClose} : {open: boolean, onClose: () => void}
                 <DialogContentText>
                     Enter a title for the New Chat
                 </DialogContentText>
-                <TextField
-                    onChange={ e => setChatTitle(e.target.value) }
-                />
+                <TextField onChange={ handleOnChangeChatTitle }/>
             </DialogContent>
             <DialogActions>
-                <Button 
-                    onClick={onClose}
-                >
+                <Button sx={{ color: '#4287f5' }} onClick={onClose}>
                     Cancel
                 </Button>
-                <Button onClick={() => handleCreate()}>
+                <Button sx={{ color: '#4287f5' }} onClick={() => handleCreateNewChat()} disabled={!chatTitle}>
                     Save
                 </Button>
             </DialogActions>
